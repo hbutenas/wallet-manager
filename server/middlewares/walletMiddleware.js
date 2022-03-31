@@ -1,7 +1,7 @@
 const CustomError = require('../errors/');
 
 const createWalletMiddleware = async (req, res, next) => {
-    const { wallet_name } = req.params;
+    const { wallet_name } = req.body;
 
     if (!wallet_name) throw new CustomError.BadRequest('Wallet name is required');
 
