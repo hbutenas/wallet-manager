@@ -41,10 +41,8 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5555;
 
-if (!module.parent) {
-    app.listen(PORT, () => {
+app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}...`);
-    });
-}
+});
 
 module.exports = app;
