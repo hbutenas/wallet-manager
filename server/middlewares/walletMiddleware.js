@@ -15,4 +15,5 @@ const createWalletMiddleware = async (req, res, next) => {
 
     next();
 };
+
 module.exports = { createWalletMiddleware };
