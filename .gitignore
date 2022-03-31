@@ -1,0 +1,13 @@
+.DS_Store
+/dist
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+/server/node_modules
+/server/.env
+/client/node_modules
