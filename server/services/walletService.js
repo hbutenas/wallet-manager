@@ -43,18 +43,8 @@ const getWalletService = async reqUser => {
  * returns updated wallet
  * finds existing wallet by wallet_id, checks is the actual owner made the request and updates it  */
 const updateWalletService = async Request => {
-    const { user_id } = Request.user;
     const { wallet_name } = Request.body;
     const { id: walletId } = Request.params;
-
-    // find the wallet by provided wallet id
-    const wallet = await getWallet('wallet_id', walletId);
-
-    // wallet does not exists
-    if (wallet.length <= 0) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
-
-    // not the actual user is trying to update his own wallet
-    if (wallet[0].user_id !== user_id) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
 
     // update wallet name
     const updatedWallet = await updateWallet('wallet_id', walletId, { wallet_name });
@@ -68,18 +58,9 @@ const updateWalletService = async Request => {
  * returns true or false after deleting the wallet
  * finds existing wallet by wallet_id checks is the actual owner made the request and deletes it */
 const deleteWalletService = async Request => {
-    const { user_id } = Request.user;
     const { id: walletId } = Request.params;
 
-    // find the wallet by provided id
-    const wallet = await getWallet('wallet_id', walletId);
-
-    // wallet does not exists
-    if (wallet.length <= 0) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
-
-    // not the actual user is trying to delete his own wallet
-    if (wallet[0].user_id !== user_id) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
-
+    // delete existing wallet
     const deletedWallet = await deleteWallet('wallet_id', walletId);
 
     if (!deletedWallet) return CustomError.InternalServer('Something went wrong... Please try again later');
