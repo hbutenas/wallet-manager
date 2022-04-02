@@ -3,10 +3,9 @@ exports.up = function (knex) {
         table.increments('balance_id').primary();
         table.integer('wallet_id').unsigned();
         table.foreign('wallet_id').references('wallet_id').inTable('wallet').onDelete('CASCADE');
-        table.enum('action', ['increase', 'decrease']).notNullable(); // might be that I will need to use .enum('action',['increase','decrease'])
-        table.integer('amount').notNullable();
-        table.integer('total_balance_new').notNullable();
-        table.integer('total_balance_previous').notNullable();
+        table.enum('action', ['increase', 'decrease', 'created']).defaultTo('created');
+        table.integer('amount');
+        table.integer('total_balance');
         table.timestamp('updated_at').defaultTo(knex.fn.now());
         table.timestamp('created_at').defaultTo(knex.fn.now());
     });
