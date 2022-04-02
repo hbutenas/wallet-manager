@@ -12,7 +12,6 @@ const { createBalanceMiddleware, updateBalanceMiddleware } = require('../middlew
 router.route('/').post([authenticateUser, createBalanceMiddleware], createBalanceController);
 
 // Makes the action ['increase','decrease']
-//  create negaliu middleware naudot,nes reik per query nustatyt koki actiona atlieka
 router.route('/action').post([authenticateUser, updateBalanceMiddleware], updateBalanceController);
 
 module.exports = router;
