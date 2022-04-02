@@ -7,6 +7,7 @@ const app = express();
 // routes
 const authRouter = require('./routes/authRouter');
 const walletRouter = require('./routes/walletRouter');
+const balanceRouter = require('./routes/balanceRouter');
 // packages
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
@@ -37,12 +38,13 @@ app.use(
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/wallet', walletRouter);
+app.use('/api/v1/balance', balanceRouter);
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5555;
 
 app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}...`);
+    console.log(`Server is running on port ${PORT}...`);
 });
 
 module.exports = app;
