@@ -9,7 +9,7 @@ const getSingleUser = async (property, value) => {
 };
 
 const getSingleUserPassword = async (property, value) => {
-    return database('users').column(['user_id', 'username', 'password']);
+    return database('users').column(['user_id', 'username', 'password']).where(property, value);
 };
 
 const getAllUsers = async () => {};
