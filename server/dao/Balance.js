@@ -9,6 +9,8 @@ const deleteBalance = async (property, value) => {
 };
 
 const getBalance = async (property, value) => {
-    return database('balance').returning('*');
+    return database('balance').where(property, value).returning('*');
 };
+
+
 module.exports = { createBalance, deleteBalance, getBalance };
