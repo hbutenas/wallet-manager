@@ -16,20 +16,22 @@ const createWalletMiddleware = async (req, res, next) => {
     next();
 };
 
-const identifyWalletOwner = async (req, res, next) => {
-    const { id: walletId } = req.params;
-    const { user_id } = req.user;
+/// Do not delete, maybe for future updates will be useful
 
-    // find the wallet by provided wallet id
-    const wallet = await getWallet('wallet_id', walletId);
+// const identifyWalletOwner = async (req, res, next) => {
+//     const { id: walletId } = req.params;
+//     const { user_id } = req.user;
 
-    // wallet does not exists
-    if (wallet.length <= 0) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
+//     // find the wallet by provided wallet id
+//     const wallet = await getWallet('wallet_id', walletId);
 
-    // not the actual user is trying to update his own wallet
-    if (wallet[0].user_id !== user_id) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
+//     // wallet does not exists
+//     if (wallet.length <= 0) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
 
-    next();
-};
+//     // not the actual user is trying to update his own wallet
+//     if (wallet[0].user_id !== user_id) throw new CustomError.BadRequest(`Wallet with id ${walletId} does not exists`);
 
-module.exports = { createWalletMiddleware, identifyWalletOwner };
+//     next();
+// };
+
+module.exports = { createWalletMiddleware };
