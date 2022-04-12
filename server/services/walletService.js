@@ -6,15 +6,16 @@ const { createWallet, getWallet, updateWallet, deleteWallet } = require('../dao/
  * checks for already existing wallet by user_id */
 const createWalletService = async Request => {
     const { wallet_name } = Request.body;
+    const { user_id } = Request.user;
 
-    const existingWallet = await getWallet('user_id', Request.user.user_id);
+    const existingWallet = await getWallet('user_id', user_id);
 
     if (existingWallet.length > 0) throw new CustomError.BadRequest('Only one wallet per account is allowed');
 
     const loweredWalletName = wallet_name.toLowerCase();
 
     const walletPayload = {
-        user_id: Request.user.user_id,
+        user_id,
         wallet_name: loweredWalletName
     };
 
@@ -44,10 +45,10 @@ const getWalletService = async reqUser => {
  * finds existing wallet by wallet_id, checks is the actual owner made the request and updates it  */
 const updateWalletService = async Request => {
     const { wallet_name } = Request.body;
-    const { id: walletId } = Request.params;
+    const { user_id } = Request.user;
 
     // update wallet name
-    const updatedWallet = await updateWallet('wallet_id', walletId, { wallet_name });
+    const updatedWallet = await updateWallet('user_id', user_id, { wallet_name });
 
     if (updatedWallet.length <= 0) return CustomError.InternalServer('Something went wrong... Please try again later');
 
@@ -58,10 +59,10 @@ const updateWalletService = async Request => {
  * returns true or false after deleting the wallet
  * finds existing wallet by wallet_id checks is the actual owner made the request and deletes it */
 const deleteWalletService = async Request => {
-    const { id: walletId } = Request.params;
+    const { user_id } = Request.user;
 
     // delete existing wallet
-    const deletedWallet = await deleteWallet('wallet_id', walletId);
+    const deletedWallet = await deleteWallet('user_id', user_id);
 
     if (!deletedWallet) return CustomError.InternalServer('Something went wrong... Please try again later');
 
