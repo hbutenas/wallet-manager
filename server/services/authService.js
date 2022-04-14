@@ -31,7 +31,6 @@ const registerUserService = async reqBody => {
  * Usernames as lower case always!
  */
 const loginUserService = async (reqBody, Response) => {
-    // Kai jungiasi useris cia atiduoda visus, turi returning tik ta 1 su kuriuo jungiasi
     const { username, password } = reqBody;
 
     const lowerCasedUsername = username.toLowerCase();
@@ -61,4 +60,10 @@ const logoutUserService = async Response => {
 
     return { message: 'Successfully logged out' };
 };
-module.exports = { registerUserService, loginUserService, logoutUserService };
+
+const verifyUserService = async Request => {
+    const { user_id, username } = Request.user;
+    return { user_id, username };
+};
+
+module.exports = { registerUserService, loginUserService, logoutUserService, verifyUserService };
