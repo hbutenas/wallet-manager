@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { registerUserService, loginUserService, logoutUserService } = require('../services/authService');
+const { registerUserService, loginUserService, logoutUserService, verifyUserService } = require('../services/authService');
 
 const registerUserController = async (req, res) => {
     const response = await registerUserService(req.body);
@@ -16,4 +16,8 @@ const logoutUserController = async (req, res) => {
     res.status(StatusCodes.OK).json({ response });
 };
 
-module.exports = { registerUserController, loginUserController, logoutUserController };
+const verifyUserController = async (req, res) => {
+    const response = await verifyUserService(req);
+    res.status(StatusCodes.OK).json({ response });
+};
+module.exports = { registerUserController, loginUserController, logoutUserController, verifyUserController };
