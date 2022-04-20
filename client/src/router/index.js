@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import { beforeEnterValidation } from '../composables/auth/beforeEnterValidation';
+
+/**
+ * Todo
+ * Whenever already logged in user hits the / route he should be redirected to 'Dashboard' page
+ */
 
 const routes = [
     {
@@ -22,7 +28,14 @@ const routes = [
     {
         path: '/Dashboard',
         name: 'Dashboard',
-        component: Home // change to normal component
+        component: () => import('../views/Dashboard/Dashboard.vue'),
+        async beforeEnter(to, from, next) {
+            const response = await beforeEnterValidation();
+
+            if (!response) await router.push({ name: 'Home' });
+
+            next();
+        }
     }
 ];
 
@@ -32,4 +45,3 @@ const router = createRouter({
 });
 
 export default router;
-//   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
