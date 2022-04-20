@@ -1,36 +1,34 @@
 <template>
-    <div>
-        <form @submit.prevent="handleSubmit">
-            <p class="error-message" v-if="failedToLogin">Username or password incorrect</p>
+    <form @submit.prevent="handleSubmit">
+        <p class="error-message" v-if="failedToLogin">Username or password incorrect</p>
 
-            <!-- username -->
-            <label for="username" id="username">Username</label>
-            <input type="text" required v-model="username" />
+        <!-- username -->
+        <label for="username" id="username">Username</label>
+        <input type="text" required v-model="username" />
 
-            <!-- password -->
-            <label for="username" id="password">Password</label>
-            <input type="password" required v-model="password" />
+        <!-- password -->
+        <label for="username" id="password">Password</label>
+        <input type="password" required v-model="password" />
 
-            <!-- buttons -->
-            <div class="row">
-                <div class="col-6 sign-in">
-                    <div>
-                        <button>Sign in</button>
-                    </div>
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-6 sign-in">
+                <div>
+                    <button>Sign in</button>
                 </div>
-                <div class="col-6 actions">
-                    <div class="row">
-                        <div>
-                            <router-link :to="{ name: 'Register' }">Register now</router-link>
-                        </div>
-                        <div>
-                            <router-link :to="{ name: 'Forgot' }">Forgot password?</router-link>
-                        </div>
+            </div>
+            <div class="col-6 actions">
+                <div class="row">
+                    <div>
+                        <router-link :to="{ name: 'Register' }">Register now</router-link>
+                    </div>
+                    <div>
+                        <router-link :to="{ name: 'Forgot' }">Forgot password?</router-link>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </template>
 
 <script>
@@ -39,18 +37,17 @@ import { useRouter } from 'vue-router';
 import { loginValidation } from '../composables/auth/loginValidation';
 export default {
     name: 'Home',
-    components: {},
     setup() {
         const router = useRouter();
-        let username = ref('');
-        let password = ref('');
-        let failedToLogin = ref(false);
+        const username = ref('');
+        const password = ref('');
+        const failedToLogin = ref(false);
 
         const handleSubmit = async () => {
             const response = await loginValidation(username.value, password.value);
 
             // invalid username or password
-            if (!response) return (failedToLogin = true);
+            if (!response) return (failedToLogin.value = !failedToLogin.value);
 
             // redirecting to dashboard
             await router.push({ name: 'Dashboard' });
@@ -59,6 +56,7 @@ export default {
         return { username, password, failedToLogin, handleSubmit };
     }
 };
+//  Todo - create error styling for incorrect credentials
 </script>
 
 <style scoped>
