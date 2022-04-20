@@ -1,0 +1,173 @@
+<template>
+    <div class="container">
+        {{ wallet && <CreateWallet />}}
+
+        <!-- <div class="manage-walet" v-if="wallet"> -->
+        <!-- // Balance stuff -->
+        <!-- </div> -->
+        <!-- <div class="create-wallet" v-else>
+            <form @submit.prevent="handleSubmit">
+                <p :class="[failedToCreateWallet ? 'wallet-text-error' : 'wallet-text']">{{ defaultText }}</p>
+                wallet name -->
+        <!-- <label for="wallet-name" id="wallet-name">Wallet name</label> -->
+        <!-- <input type="text" required v-model="walletName" /> -->
+        <!-- <button>Create wallet</button> -->
+        <!-- </form> -->
+        <!-- </div> -->
+    </div>
+</template>
+<script>
+import { onBeforeMount, ref } from 'vue';
+import { getWallet, createWallet } from '../../composables/wallet/wallet';
+import CreateWallet from '../Dashboard/CreateWallet.vue';
+export default {
+    name: 'Dashboard',
+    components: {
+        CreateWallet
+    },
+    setup() {
+        onBeforeMount(async () => {
+            wallet.value = await getWallet();
+        });
+        const wallet = ref([]);
+
+        // const walletName = ref('');
+        // const defaultText = ref('Create your first wallet and start tracking money!');
+        // const failedToCreateWallet = ref(false);
+
+        // const handleSubmit = async () => {
+        //     // passed spacing only
+        //     if (walletName.value.trim() === '') {
+        //         defaultText.value = 'Invalid wallet name provided';
+        //         failedToCreateWallet.value = !failedToCreateWallet.value;
+        //         return;
+        //     }
+
+        //     const response = await createWallet(walletName.value);
+        // };
+
+        return { wallet, walletName, failedToCreateWallet, defaultText, handleSubmit };
+    }
+};
+</script>
+
+<style scoped>
+/* create wallet styles */
+/* 
+.create-wallet {
+    background: red;
+    max-width: 600px;
+    margin: 150px auto;
+    background: white;
+    text-align: left;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+label {
+    color: #5a4fcf;
+    display: inline-block;
+    margin: 25px 0 15px;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+input {
+    display: block;
+    padding: 10px 6px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+}
+input:focus {
+    outline: none;
+}
+button {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background: #5a4fcf;
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: white;
+    border-radius: 20px;
+}
+.wallet-text {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #483d8b;
+}
+.wallet-text-error {
+    color: red;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+} */
+</style>
+--
+   
+   =====
+      <!-- <div class="col-4" v-for="wal in wallet" :key="wal.wallet_id">
+                <p class="mb-0">{{ wal.wallet_name }}</p>
+                <form @submit.prevent="handleSubmit" class="amount-form">
+            //         <!-- amount -->
+            //         <label for="amount" id="amount">{{ balanceText }}</label>
+            //         <input type="number" required v-model="amount" />
+
+            //         <!-- selector -->
+            //         <select name="action-type" id="action-type" v-model="selected">
+            //             <option selected disabled>Action</option>
+            //             <option value="increase">Increase</option>
+            //             <option value="decrease">Decrease</option>
+            //         </select>
+
+            //         <!-- button -->
+            //         <div class="row">
+            //             <div class="col-5">
+            //                 <button>Update</button>
+            //             </div>
+            //         </div>
+            //     </form>
+            // </div> -->
+
+
+            =====
+             <div class="col-8">
+                <div class="row">
+                    <div class="col-4 text-header mt-1">
+                        <p>Action</p>
+                    </div>
+                    <div class="col-4 text-header mt-1">
+                        <p>Amount</p>
+                    </div>
+                    <div class="col-4 text-header mt-1">
+                        <p>Balance</p>
+                    </div>
+                    <div class="row balance-content" v-for="bal in balance" :key="bal.balance_id">
+                        <!-- action -->
+                        <div class="col-4 text-balance">
+                            <div :class="bal.action === 'decrease' ? 'balance-action text-danger mb-2' : 'balance-action text-success mb-2'">
+                                {{ bal.action }}
+                            </div>
+                        </div>
+                        <!-- amount -->
+                        <div class="col-4 text-balance">
+                            <div :class="bal.action === 'decrease' ? 'balance-action text-danger mb-2' : 'balance-action text-success mb-2'">
+                                {{ bal.action === 'decrease' ? `-${bal.amount}` : `+${bal.amount}` }}
+                            </div>
+                        </div>
+                        <!-- balance -->
+                        <div class="col-4 text-balance">
+                            <div class="balance-action">{{ bal.total_balance }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
