@@ -1,4 +1,3 @@
-import store from '../../store';
 export const loginValidation = async (username, password) => {
     // empty field
     if (!username || !password) {
@@ -30,8 +29,6 @@ export const loginValidation = async (username, password) => {
     const data = await response.json();
 
     if (data.message) return false;
-
-    // create a state
 
     return true;
 };
